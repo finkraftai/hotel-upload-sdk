@@ -6,7 +6,7 @@ from .utils.exceptions import (
     UploadFailed,
     ConnectionError,
 )
-from hotel_sdk.database.connection import initalize_db
+from hotel_sdk.database.connection import initialize_db
 
 __version__ = "1.0.0"
 __author__ = "MaheshG"
@@ -19,5 +19,5 @@ __all__ = [
     "DuplicateError",
     "UploadFailed",
     "ConnectionError",
-    "initialize_db",
+    "initialize_db",    
 ]
