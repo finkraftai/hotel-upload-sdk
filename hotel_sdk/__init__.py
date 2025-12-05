@@ -19,5 +19,5 @@ __all__ = [
     "DuplicateError",
     "UploadFailed",
     "ConnectionError",
-    "initialize_db",    
+    "initialize_db",
 ]

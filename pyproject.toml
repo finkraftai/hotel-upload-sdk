@@ -1,22 +1,57 @@
-[project]
-name = "hotel-sdk"
-version = "0.1.0"
-description = "Hotel ingestion SDK for hotel_uploads"
-authors = [{ name = "MaheshG", email = "mahesh.dev07@kgrp.in" }]
-readme = "README.md"
-requires-python = ">=3.7"
-license = { text = "MIT" }
-
-dependencies = [
-  "pydantic>=1.10.7",
-  "psycopg2-binary>=2.9.7",
-  "python-dotenv>=1.0.0",
-]
-
 [build-system]
-requires = ["setuptools","wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "hotel-upload-sdk"
+version = "1.0.0"
+description = "Python SDK for hotel data upload with cloud URL validation and duplicate prevention"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Finkraft AI", email = "info@finkraft.ai"}
+]
+maintainers = [
+    {name = "Finkraft AI", email = "info@finkraft.ai"}
+]
+keywords = ["hotel", "upload", "sdk", "cloud", "validation", "s3", "azure", "cloudfront"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
 
-[project.scripts]
-hotel-sdk-cli = "hotel_sdk.cli:main"
+dependencies = [
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "psycopg2-binary>=2.9.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/finkraftai/hotel-upload-sdk"
+Documentation = "https://github.com/finkraftai/hotel-upload-sdk#readme"
+Repository = "https://github.com/finkraftai/hotel-upload-sdk"
+Issues = "https://github.com/finkraftai/hotel-upload-sdk/issues"
+Changelog = "https://github.com/finkraftai/hotel-upload-sdk/releases"
+
+[tool.setuptools]
+packages = ["hotel_sdk"]
+
+[tool.setuptools.package-data]
+hotel_sdk = ["py.typed"]
