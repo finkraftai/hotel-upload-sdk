@@ -36,3 +36,9 @@ Thumbs.db
 
 .pytest_cache
 
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
