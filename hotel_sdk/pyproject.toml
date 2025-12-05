@@ -1,0 +1,24 @@
+[project]
+name = "hotel-sdk"
+version = "0.1.0"
+description = "Hotel ingestion SDK for hotel_uploads"
+authors = [{ name = "MaheshG", email = "mahesh.dev07@kgrp.in" }]
+readme = "README.md"
+requires-python = ">=3.7"
+license = { text = "MIT" }
+
+
+dependencies = [
+  "pydantic>=1.10.7",
+  "psycopg2-binary>=2.9.7",
+  "python-dotenv>=1.0.0",
+]
+
+
+[build-system]
+requires = ["setuptools","wheel"]
+build-backend = "setuptools.build_meta"
+
+
+[project.scripts]
+hotel-sdk-cli = "hotel_sdk.cli:main"
