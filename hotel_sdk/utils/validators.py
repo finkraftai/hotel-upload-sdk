@@ -32,27 +32,27 @@ def validate_cloud_url(url: str) -> bool:
         return False
 
     scheme = parsed.scheme.lower()
-    host = parsed.netloc.lower()
+    # host = parsed.netloc.lower()
 
     # Only allow HTTP/HTTPS
     if scheme not in ("http", "https"):
         return False
 
     # AWS S3 standard: bucket.s3.amazonaws.com
-    if host.endswith(".s3.amazonaws.com"):
-        return True
+    # if host.endswith(".s3.amazonaws.com"):
+    #     return True
 
-    # AWS S3 regional: bucket.s3.region.amazonaws.com
-    if ".s3." in host and host.endswith(".amazonaws.com"):
-        return True
+    # # AWS S3 regional: bucket.s3.region.amazonaws.com
+    # if ".s3." in host and host.endswith(".amazonaws.com"):
+    #     return True
 
-    # AWS CloudFront
-    if host.endswith(".cloudfront.net"):
-        return True
+    # # AWS CloudFront
+    # if host.endswith(".cloudfront.net"):
+    #     return True
 
-    # Azure Blob storage
-    if host.endswith(".blob.core.windows.net"):
-        return True
+    # # Azure Blob storage
+    # if host.endswith(".blob.core.windows.net"):
+    #     return True
 
     # Anything else is invalid
     return False
