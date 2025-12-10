@@ -11,7 +11,7 @@ A lightweight, robust, and production-ready Python SDK for handling **hotel file
 ### Installation
 
 ```bash
-pip install git+https://github.com/<username>/hotel-sdk.git
+pip install git+https://github.com/finkraftai/hotel-upload-sdk.git
 ```
 
 ---
