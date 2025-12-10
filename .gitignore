@@ -42,3 +42,5 @@ build/
 *.egg-info/
 *.egg
 .eggs/
+
+demo.py

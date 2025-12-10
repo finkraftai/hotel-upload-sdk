@@ -6,7 +6,7 @@ from hotel_sdk.utils.exceptions import ValidationError
 
 class HotelUpload(BaseModel):
     id: str
-    file_url: HttpUrl
+    file_url: str
     source: str 
     source_id: str = Field(..., min_length=1)   
     client_name: str
