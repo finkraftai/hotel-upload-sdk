@@ -1,9 +1,5 @@
-# CHECK_DUPLICATE_SOURCE_ID = """
-# SELECT COUNT(*) as count FROM hotel_uploads WHERE source_id = %(source_id)s;
-# """
-
 CHECK_DUPLICATE_FILE_HASH = """
-SELECT COUNT(*) as count FROM hotel_uploads WHERE file_hash = %(file_hash)s;
+SELECT EXISTS(SELECT 1 FROM hotel_uploads WHERE file_hash = %(file_hash)s) as exists;
 """
 
 INSERT_HOTEL_UPLOAD = """

@@ -1,62 +1,61 @@
 import psycopg2
+from psycopg2 import pool
 from psycopg2.extras import RealDictCursor
 from typing import Optional
 from hotel_sdk.utils.exceptions import ConnectionError as DBConnectionError
 
-# Global connection string
+# Global connection pool
+_pool: Optional[pool.SimpleConnectionPool] = None
 _connection_string: Optional[str] = None
 
 def initialize_db(connection_string: str) -> None:
     """
-    Initialize database with user's connection string.
-    
-    Args:
-        connection_string: PostgreSQL connection string
-            Format: "host=... port=... dbname=... user=... password=..."
+    Initialize database pool with user's connection string.
     """
-    global _connection_string
+    global _connection_string, _pool
     _connection_string = connection_string
+    # Clear existing pool if it exists
+    if _pool:
+        _pool.closeall()
+        _pool = None
+
+def _get_pool():
+    """Get or create connection pool."""
+    global _pool, _connection_string
+    
+    if _pool is not None:
+        return _pool
+
+    try:
+        if _connection_string is not None:
+            _pool = pool.SimpleConnectionPool(1, 10, _connection_string)
+        else:
+            # Fallback to SDK's config
+            from hotel_sdk.config.config import settings
+            _pool = pool.SimpleConnectionPool(
+                1, 10,
+                host=settings.pg_host,
+                port=settings.pg_port,
+                dbname=settings.pg_db,
+                user=settings.pg_user,
+                password=settings.pg_password
+            )
+        return _pool
+    except psycopg2.Error as e:
+        raise DBConnectionError(f"Failed to initialize database pool: {e}")
 
 def get_connection():
-    """Get database connection."""
-    global _connection_string
-    
-    # If user provided connection string, use it
-    if _connection_string is not None:
-        try:
-            conn = psycopg2.connect(_connection_string)
-            conn.cursor_factory = RealDictCursor
-            return conn
-        except psycopg2.Error as e:
-            raise DBConnectionError(f"Database connection failed: {e}")
-    
-    # Fallback to SDK's config (for backward compatibility)
-    from hotel_sdk.config.config import settings
+    """Get database connection from pool."""
     try:
-        conn = psycopg2.connect(
-            host=settings.pg_host,
-            port=settings.pg_port,
-            dbname=settings.pg_db,
-            user=settings.pg_user,
-            password=settings.pg_password
-        )
+        p = _get_pool()
+        conn = p.getconn()
         conn.cursor_factory = RealDictCursor
         return conn
     except psycopg2.Error as e:
         raise DBConnectionError(f"Database connection failed: {e}")
-    
-    
-    
-# import psycopg2
-# from psycopg2.extras import RealDictCursor
-# from hotel_sdk.config import settings
 
-# def get_connection():
-#     return psycopg2.connect(
-#         host=settings.pg_host,
-#         port=settings.pg_port,
-#         database=settings.pg_db,
-#         user=settings.pg_user,
-#         password=settings.pg_password,
-#         cursor_factory=RealDictCursor
-#     )
+def release_connection(conn):
+    """Release a connection back to the pool."""
+    global _pool
+    if _pool:
+        _pool.putconn(conn)

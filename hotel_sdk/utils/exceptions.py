@@ -5,7 +5,6 @@ class ValidationError(Exception):
     """Raised when input validation fails (e.g., invalid URL format)."""
     pass
 
-
 class DuplicateError(Exception):
     """Raised when source_id hash already exists in database."""
     pass
