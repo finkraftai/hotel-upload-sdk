@@ -4,7 +4,7 @@ from pydantic import Field
 class Settings(BaseSettings):
     pg_host: str = Field(default="localhost")
     pg_port: int = Field(default=5432)
-    pg_db: str = Field(default="postgres")
+    pg_database: str = Field(default="postgres")
     pg_user: str = Field(default="postgres")
     pg_password: str = Field(default="root")
     max_retries: int = 3

@@ -36,7 +36,7 @@ def _get_pool():
                 1, 10,
                 host=settings.pg_host,
                 port=settings.pg_port,
-                dbname=settings.pg_db,
+                dbname=settings.pg_database,
                 user=settings.pg_user,
                 password=settings.pg_password
             )
