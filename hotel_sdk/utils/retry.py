@@ -27,4 +27,3 @@ def retry(operation, attempts=None, delay=None, ignored_exceptions=None):
                 
             backoff = delay * (2 ** attempt)
             time.sleep(backoff)
-
