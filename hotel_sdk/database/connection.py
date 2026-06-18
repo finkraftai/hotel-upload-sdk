@@ -1,8 +1,10 @@
 import psycopg2
 from psycopg2 import pool
-from psycopg2.extras import RealDictCursor
+from psycopg2.extras import RealDictCursor,register_uuid
 from typing import Optional
 from hotel_sdk.utils.exceptions import ConnectionError as DBConnectionError
+
+register_uuid()
 
 # Global connection pool
 _pool: Optional[pool.SimpleConnectionPool] = None
