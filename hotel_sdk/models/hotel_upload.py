@@ -5,7 +5,6 @@ from hotel_sdk.utils.validators import validate_cloud_url
 from hotel_sdk.utils.exceptions import ValidationError
 
 class HotelUpload(BaseModel):
-    # 1. Use UUID type for strict validation
     id: UUID 
     file_url: str
     source: str 
@@ -13,12 +12,7 @@ class HotelUpload(BaseModel):
     client_name: str
     file_hash: str = Field(..., min_length=1)   
     status: str
-    
-    # 2. Use timezone-aware defaults for created_on (Matches timestamptz)
     created_on: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    
-    # 3. For updated_on, if your DB is 'without time zone', 
-    # keep it as naive or handle conversion in the repository layer.
     updated_on: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     model_config = ConfigDict(from_attributes=True)
